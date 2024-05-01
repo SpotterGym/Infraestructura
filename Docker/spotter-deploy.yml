@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app: 
+    build: 
+      context: ../../Frontend
+      dockerfile: ../Frontend/Dockerfile
+    ports:
+      - "${PORT_LOCALHOST_DOCKER_FRONT}:${PORT_LOCALHOST_FRONT}"  
+    volumes:
+      - ../../Frontend:/app  
+    environment:
+      - NODE_ENV=development
+    restart: always  
+    env_file:
+      - .env 
+    depends_on:
+      - api
+
+  api:
+    build: 
+      context: ../../Api 
+      dockerfile: ../Api/Dockerfile
+    ports:
+      - "${PORT_LOCALHOST_DOCKER_API}:${PORT_LOCALHOST_API}"  
+    volumes:
+      - ../../Api:/myDB
+    environment:
+      - NODE_ENV=development
+    restart: always   
+    env_file:
+      - .env 
