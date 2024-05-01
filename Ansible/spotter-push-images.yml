@@ -8,9 +8,9 @@
         chdir: ../
 
     - name: Loguearse en Docker Hub con el token de acceso
-      command: docker login -u maxibarbo --password-stdin
+      command: '${DOCKER_USER}'
       args:
-        stdin: dckr_pat_rniGeuMJJIlSChEvMslNzasblXA
+        stdin: '${DOCKER_PASS}'
       become: yes
 
     - name: Etiquetar la imagen del Front con la etiqueta de Docker Hub
