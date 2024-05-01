@@ -1,0 +1,38 @@
+---
+- name: Despliegue de contenedores con Docker Compose y push a Docker Hub
+  hosts: localhost
+  tasks:
+    - name: Ejecutar docker-compose up
+      command: docker-compose -p spotter -f ./Docker/spotter-deploy.yml up -d
+      args:
+        chdir: ../
+
+    - name: Loguearse en Docker Hub con el token de acceso
+      command: docker login -u maxibarbo --password-stdin
+      args:
+        stdin: dckr_pat_rniGeuMJJIlSChEvMslNzasblXA
+      become: yes
+
+    - name: Etiquetar la imagen del Front con la etiqueta de Docker Hub
+      command: docker tag spotter_app maxibarbo/spotter_app:1.0
+      args:
+        chdir: ../
+      become: yes
+
+    - name: Empujar la imagen del Front al repositorio de Docker Hub
+      command: docker push maxibarbo/spotter_app:1.0
+      args:
+        chdir: ../
+      become: yes
+
+    - name: Etiquetar la imagen de la API con la etiqueta de Docker Hub
+      command: docker tag spotter_api maxibarbo/spotter_api:1.0
+      args:
+        chdir: ../
+      become: yes
+
+    - name: Empujar la imagen de la API al repositorio de Docker Hub
+      command: docker push maxibarbo/spotter_api:1.0
+      args:
+        chdir: ../
+      become: yes
