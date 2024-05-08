@@ -1,4 +1,4 @@
-name: DockerHub CI/CD
+name: Docker-Push CI/CD
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
       - name: Clone GitHub repository
-        run: git clone --single-branch --branch master https://${{ secrets.DOCKER_TOKEN }}@github.com/SpotterGym/Frontend.git
+        run: git clone --single-branch --branch testing https://${{ secrets.DOCKER_TOKEN }}@github.com/SpotterGym/Frontend.git
       
       - name: Build Docker image
         run: docker build -t spotter-app -f Frontend/Dockerfile Frontend
@@ -23,9 +23,7 @@ jobs:
       - name: Tags Docker image
         run: |
           docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
-          docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:latest
 
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USER }}/spotter-app:latest
