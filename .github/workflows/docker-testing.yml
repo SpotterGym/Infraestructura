@@ -37,7 +37,7 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
       - name: Clone GitHub repository
-        run: git clone --single-branch --branch master https://${{ secrets.DOCKER_TOKEN }}@github.com/SpotterGym/Frontend.git
+        run: git clone --single-branch --branch testing https://${{ secrets.DOCKER_TOKEN }}@github.com/SpotterGym/Frontend.git
       
       - name: Build Docker image
         run: docker build -t spotter-app -f Frontend/Dockerfile Frontend
