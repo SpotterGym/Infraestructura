@@ -1,0 +1,54 @@
+name: Docker Testing CI/CD
+
+on:
+  workflow_dispatch:
+
+jobs:
+  testing-app:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:focal
+
+    steps:
+      - name: Checkout Testing repository
+        uses: actions/checkout@v2
+        with:
+          repository: SpotterGym/Testing
+          ref: spotter-app_1.0 # cambiar a rama donde se encutran test del release correspondiente
+          token: ${{ secrets.DOCKER_TOKEN }}
+  
+      - name: Install dependencies
+        run: npm ci
+  
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+  
+      - name: Run Playwright tests
+        run: npx playwright test
+
+  push-dockerfile:
+    runs-on: ubuntu-latest
+    needs: testing-app
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Docker login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+      - name: Clone GitHub repository
+        run: git clone --single-branch --branch master https://${{ secrets.DOCKER_TOKEN }}@github.com/SpotterGym/Frontend.git
+      
+      - name: Build Docker image
+        run: docker build -t spotter-app -f Frontend/Dockerfile Frontend
+
+      - name: Tags Docker image
+        run: |
+          docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:latest
+        #   docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
+
+      - name: Push Docker image to Docker-Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/spotter-app:latest
+        #   docker push ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
+          

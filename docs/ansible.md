@@ -5,7 +5,9 @@ runme:
 ---
 
 * Iniciar desde consola Wsl el archivo Ansible para ejecutar docker-compose y luego pushear al repositorio de docker hub las imagenes creadas
+- Ejecutar archivo ansible (docker-push.yml) desde el directorio contenedor Ansible/
 
 ```sh {"id":"01HWP94ZBGVA629J1KH2Y6RVFE"}
 sudo ansible-playbook docker-push.yml
+
 ```

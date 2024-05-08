@@ -1,0 +1,33 @@
+name: Testing CI/CD
+
+on:
+  push:
+    branches:
+      - Docker-Testing
+  pull_request:
+    branches:
+      - Docker-Testing
+jobs:
+  testing_app:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:focal
+
+    steps:
+      - name: Checkout Testing repository
+        uses: actions/checkout@v2
+        with:
+          repository: SpotterGym/Testing
+          ref: spotter-app_1.0 # cambiar a rama donde se encutran test del release correspondiente
+          token: ${{ secrets.DOCKER_TOKEN }}
+  
+      - name: Install dependencies
+        run: npm ci
+  
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+  
+      - name: Run Playwright tests
+        run: npx playwright test
+
+

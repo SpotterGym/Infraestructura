@@ -1,0 +1,37 @@
+name: Docker Push CI/CD
+on:
+  push:
+    branches:
+    - Docker-Push
+  pull_request:
+    branches:
+      - Docker-Push
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    container:
+      image: node:20-alpine3.18
+
+    steps:
+      - uses: actions/checkout@v1
+
+  cd:
+    runs-on: ubuntu-latest
+    needs: ci
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+      - name: Build
+        run: docker build -t spotter-app .
+
+      - name: Tags
+        run: |
+          docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
+          docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:latest
+
+      - name: Push
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_USER }}/spotter-app:latest           

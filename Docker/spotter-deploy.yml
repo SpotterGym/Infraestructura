@@ -30,3 +30,14 @@ services:
     restart: always   
     env_file:
       - .env 
+      
+  playwright_tests:
+    build:
+      context: ../../Testing
+      dockerfile: ../Testing/Dockerfile    
+    volumes:
+      - ../../Testing:/myTest
+    depends_on:
+      - app
+      - api
+
