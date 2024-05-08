@@ -22,8 +22,10 @@ jobs:
 
       - name: Tags Docker image
         run: |
+          docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:latest
           docker tag spotter-app ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
 
       - name: Push Docker image to Docker Hub
         run: |
+          docker push ${{ secrets.DOCKER_USER }}/spotter-app:latest
           docker push ${{ secrets.DOCKER_USER }}/spotter-app:${{ github.sha }}
