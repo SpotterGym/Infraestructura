@@ -13,7 +13,7 @@ docker-compose -f ../Docker/mongo-db.yml up
 * iniciar deploy sobre los dockerfile ubicados en el directorio Frontend y Api
 
 ```sh {"id":"01HWK5ZQJHMN4VD2TYEC2EWM3P"}
-docker-compose -p spotter -f ../Docker/spotter-deploy.yml up
+docker-compose -p spotter-app_v1 -f ../Docker/spotter-deploy.yml up
 ```
 
 * iniciar deploy desde imagenes subidas en docker hub

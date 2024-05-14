@@ -35,6 +35,8 @@ services:
     build:
       context: ../../Testing
       dockerfile: ../Testing/Dockerfile    
+      ports:
+      - "9323:9323"  
     volumes:
       - ../../Testing:/myTest
     depends_on:

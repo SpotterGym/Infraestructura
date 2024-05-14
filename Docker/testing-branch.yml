@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  spotter-app_1.0:
+    build:
+      context: ../../Testing
+      dockerfile: ../Testing/Dockerfile    
+    volumes:
+      - ../../Testing:/spotter-app_1.0
+    ports:
+      - "9324:9323"  
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ../configs/nginx.conf:/etc/nginx/nginx.conf  
+  #   ports:
+  #     - "9324:9323"
