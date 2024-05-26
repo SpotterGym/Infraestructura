@@ -1,0 +1,17 @@
+---
+- name: Ejecutar Dockerfile en el directorio testing
+  hosts: localhost
+  tasks:
+    - name: Construir imagen Docker desde Dockerfile
+      docker_image:
+        name: spotter-app_1.0
+        path: ../Testing/Dockerfile
+        state: build
+        source: build
+        force: yes
+
+    - name: Ejecutar contenedor a partir de la imagen
+      docker_container:
+        name: nombre_del_contenedor
+        image: spotter-app_1.0
+        state: started

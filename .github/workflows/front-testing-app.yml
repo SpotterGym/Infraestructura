@@ -1,4 +1,4 @@
-name: Testing branch spotter-app_1.0
+name: Testing branch test-release_1.0.0
 
 on:
   workflow_dispatch:
@@ -10,11 +10,11 @@ jobs:
       image: mcr.microsoft.com/playwright:focal
 
     steps:
-      - name: Checkout Testing repository
+      - name: Checkout Testing repository & cloning
         uses: actions/checkout@v2
         with:
           repository: SpotterGym/Testing
-          ref: spotter-app_1.0 # cambiar a rama donde se encutran test del release correspondiente
+          ref: test-release_1.0.0 # cambiar a rama donde se encutran test del release correspondiente
           token: ${{ secrets.DOCKER_TOKEN }}
   
       - name: Install dependencies

@@ -10,20 +10,56 @@ runme:
 docker-compose -f ../Docker/mongo-db.yml up
 ```
 
-* iniciar deploy sobre los dockerfile ubicados en el directorio Frontend y Api
+* iniciar deploy en localhost sobre los dockerfile ubicados en el directorio Frontend y Api
 
 ```sh {"id":"01HWK5ZQJHMN4VD2TYEC2EWM3P"}
-docker-compose -p spotter-app_v1 -f ../Docker/spotter-deploy.yml up
+docker-compose -p spotter-app_v1 -f ../Docker/spotter-deploy-localhost.yml up
 ```
 
-* iniciar deploy desde imagenes subidas en docker hub
+* iniciar deploy en localhost desde imagenes subidas en docker hub
 
 ```sh {"id":"01HWP8JB9J25ZMAD703R8XVHT8"}
 docker-compose -p spotter -f ../Docker/spotter-pull.yml up
+```
+
+* Realizar testing dentro de un contenedor docker sobre el directorio testing
+
+```sh {"id":"01HXW66KX5VVZ3DTHWWXXY67DV"}
+docker-compose -p testing-spotter -f ../Docker/testing-branch-localhost.yml up
 ```
 
 * Inspeccion de network
 
 ```sh {"id":"01HX54C674V4D3WZ790TZNK8YE"}
 docker inspect 'nombre de la network'
+```
+
+* contenedor random
+
+```sh {"id":"01HXZ9H8JYR7AQZVFEJH10RN7S"}
+docker run --rm -it bcbcarl/hollywood
+```
+
+* clonar rama del repositorio Testing y luego ejecutar tests
+
+```sh {"id":"01HY1BM7TA6BM19CPGXNTB683W"}
+docker-compose -p testing-spotter-app_v1 -f ../Docker/testing-branch-remote.yml up
+```
+
+* Deploy de app desde una rama del repositorio Frontend y ejecucion de tests
+
+```sh {"id":"01HY429PBAT0F01JE4C6P8B2QM"}
+docker-compose -p deploy-spotter-app_v1 -f ../Docker/spotter-app_v1.0.yml up
+```
+
+* Deploy latest version app Spotter
+
+```sh {"id":"01HY46QZ5VG29J3Z1RXGFE2M0H"}
+docker-compose -p deploy-spotter-latest -f ../Docker/deploy-app-remote.yml up
+```
+
+* Se clona branch master del repositorio Frontend y branch Spotter-app_1.0 del repositorio Testing desde docker-compose 
+
+```sh {"id":"01HYS73XZTPEJTSZG8PG61ESHE"}
+docker-compose -p deploy-testing-app_v1 -f ../Docker/dockerfile-spotter-app_1.0.yml up
 ```
