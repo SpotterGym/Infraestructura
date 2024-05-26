@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:   
+  desplegar-app:
+    image: alpine:latest
+    ports:
+      - 3030:3000    
+    volumes:
+      - ../scripts/deploy-app.sh:/deploy-app.sh
+    command: sh /deploy-app.sh
+  
+
+  testear-app:
+    image: mcr.microsoft.com/playwright:v1.43.1-focal
+    volumes:
+      - ../scripts/setup.sh:/setup.sh
+    command: sh /setup.sh
+    depends_on:
+      - desplegar-app 
+

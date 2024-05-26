@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  spotter-app_1.0:
+    build:
+      context: ../../Testing
+      dockerfile: ../Testing/Dockerfile    
+    ports:
+      - "9324:70" 
+    volumes:
+      - ../../testing/playwright-report/index.html:/usr/share/nginx/html/index.html
+
