@@ -58,8 +58,14 @@ docker-compose -p deploy-spotter-app_v1 -f ../Docker/spotter-app_v1.0.yml up
 docker-compose -p deploy-spotter-latest -f ../Docker/deploy-app-remote.yml up
 ```
 
-* Se clona branch master del repositorio Frontend y branch Spotter-app_1.0 del repositorio Testing desde docker-compose 
+* Se clona branch master del repositorio Frontend y branch test-release_1.0.0 del repositorio Testing desde docker-compose 
 
 ```sh {"id":"01HYS73XZTPEJTSZG8PG61ESHE"}
-docker-compose -p deploy-testing-app_v1 -f ../Docker/dockerfile-spotter-app_1.0.yml up
+docker-compose -p deploy-testing-app_v1 -f ../Docker/dockerfile-spotter-app_1.0.0.yml up
+```
+
+* Se clona el branch test-release_1.0.0 del repositorio Testing desde un dockerfile mediante docker-compose
+
+```sh {"id":"01HYY3WDJSNT1RY3H3FGEWQYVN"}
+docker-compose -p testing-app -f ../Docker/docker-compose/test-release_1.0.0.yml up
 ```
